@@ -163,17 +163,17 @@ EOF;
         $this->connectionModule->headers = [];
     }
 
-    public function _conflicts()
+    public function _conflicts(): string
     {
         return \Codeception\Lib\Interfaces\API::class;
     }
 
-    public function _depends()
+    public function _depends(): array
     {
         return [\Codeception\Lib\InnerBrowser::class => $this->dependencyMessage];
     }
 
-    public function _parts()
+    public function _parts(): array
     {
         return ['xml', 'json'];
     }
