@@ -663,7 +663,15 @@ EOF;
                 $this->debugSection("Request", sprintf('%s %s', $method, $url));
                 $files = [];
             } else {
-                $this->debugSection("Request", sprintf('%s %s ', $method, $url) . json_encode($parameters, JSON_THROW_ON_ERROR));
+                $this->debugSection("Request",
+                    sprintf(
+                        '%s %s %s',
+                        $method,
+                        $url,
+                        json_encode($parameters, JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR)
+                    )
+                );
+
                 $files = $this->formatFilesArray($files);
             }
             $this->response = $this->connectionModule->_request($method, $url, $parameters, $files);
@@ -721,11 +729,11 @@ EOF;
             )
         ) {
             if ($parameters instanceof JsonSerializable) {
-                return json_encode($parameters, JSON_THROW_ON_ERROR);
+                return json_encode($parameters, JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION);
             }
             if (is_array($parameters) || $parameters instanceof ArrayAccess) {
                 $parameters = $this->scalarizeArray($parameters);
-                return json_encode($parameters, JSON_THROW_ON_ERROR);
+                return json_encode($parameters, JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION);
             }
         }
 
